@@ -1,8 +1,9 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-import router from "./app/routes/index.js";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler.js";
+import notFound from "./app/middlewares/notFound.js";
+import router from "./app/routes/index.js";
 
 const app = express();
 
@@ -25,7 +26,11 @@ app.get("/", (req, res) => {
 });
 
 // global error handler
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
+
+
+// not found routes
+app.use(notFound)
 
 
 
