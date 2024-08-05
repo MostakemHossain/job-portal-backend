@@ -14,6 +14,7 @@ const userRegistration = catchAsync(async (req, res) => {
   });
 });
 
+
 export const userController = {
   userRegistration
 };
