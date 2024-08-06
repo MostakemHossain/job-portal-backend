@@ -37,8 +37,19 @@ const getJobById= async(req)=>{
     return result;
 }
 
+const getAdminsJob=async(req)=>{
+    const adminId= req.user.userId;
+    const jobs= await Job.find({created_by:adminId});
+    if(!jobs){
+        throw new AppError(httpStatus.NOT_FOUND,"Job not found");
+    }
+    return jobs;
+
+}
+
 export const jobService={
 postJob,
 getALLJob,
-getJobById
+getJobById,
+getAdminsJob
 }

@@ -30,10 +30,20 @@ const getJobById = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const getAdminsJob = catchAsync(async (req, res) => {
+    const result = await jobService.getAdminsJob(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Admin Job are retrieved Successfully",
+      data: result,
+    });
+  });
 
 export const jobController={
     postJob,
     getALLJob,
-    getJobById
+    getJobById,
+    getAdminsJob
 }
   

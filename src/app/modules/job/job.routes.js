@@ -20,6 +20,10 @@ router.get(
   "/:jobId",
   jobController.getJobById
 );
+router.get(
+  "/admin-job",
+  jobController.getAdminsJob
+);
 
 
 export const jobRoutes = router;
