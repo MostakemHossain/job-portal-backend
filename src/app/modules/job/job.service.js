@@ -39,7 +39,7 @@ const getJobById= async(req)=>{
 
 const getAdminsJob=async(req)=>{
     const adminId= req.user.userId;
-    const jobs= await Job.find({created_by:adminId});
+    const jobs= await Job.find({created_by:adminId}).populate('company');
     if(!jobs){
         throw new AppError(httpStatus.NOT_FOUND,"Job not found");
     }

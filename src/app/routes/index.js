@@ -1,4 +1,5 @@
 import express from "express";
+import { applicationRoutes } from "../modules/application/application.routes.js";
 import { authRoutes } from "../modules/auth/auth.routes.js";
 import { companyRoutes } from "../modules/company/company.routes.js";
 import { jobRoutes } from "../modules/job/job.routes.js";
@@ -23,7 +24,11 @@ const moduleRoutes = [
   {
     path: "/job",
     route: jobRoutes, 
-  }
+  },
+  {
+    path: "/application",
+    route: applicationRoutes, 
+  },
   
 ];
 
