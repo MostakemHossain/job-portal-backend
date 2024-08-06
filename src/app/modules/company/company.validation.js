@@ -6,7 +6,7 @@ const companyRegistrationValidationSchema= z.object({
             required_error:"Company name is Required"
         })
     })
-})
+});
 
 export const companyValidation={
     companyRegistrationValidationSchema

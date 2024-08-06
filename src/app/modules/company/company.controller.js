@@ -31,9 +31,20 @@ const getCompanyById = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const updateCompanyById = catchAsync(async (req, res) => {
+    const result = await companyService.updateCompany(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Company is updated Successfully",
+      data: result,
+    });
+  });
+  
 
 export const companyController={
     companyRegistration,
     getCompany,
     getCompanyById,
+    updateCompanyById,
 }

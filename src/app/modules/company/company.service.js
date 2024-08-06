@@ -38,8 +38,17 @@ const getCompanyById=async(req)=>{
     return company;
 }
 
+export const updateCompany= async(req)=>{
+    const file= req.file;
+
+    const result= await Company.findByIdAndUpdate(req.params.companyId,req.body,{new:true});
+
+    return result;
+}
+
 export const companyService={
     registerCompany,
     getCompany,
-    getCompanyById
+    getCompanyById,
+    updateCompany
 }
