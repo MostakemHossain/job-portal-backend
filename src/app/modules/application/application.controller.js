@@ -13,7 +13,17 @@ const applyJob = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const appliedJob = catchAsync(async (req, res) => {
+    const result = await applicationService.appliedJob(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Applied Job are retrieved successfully",
+      data: result,
+    });
+  });
 
   export const applicationController={
-    applyJob
+    applyJob,
+    appliedJob
   }

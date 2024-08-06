@@ -30,6 +30,27 @@ const applyJob=async(req)=>{
     
 }
 
+const appliedJob= async(req)=>{
+    const userId= req.user.userId;
+    const result= await Application.find({
+        applicant:userId
+    }).sort({
+        createdAt:-1
+    }).populate({
+        path:"job",
+        populate:{
+            path:'company'
+        }
+    });
+
+    if(!result){ 
+            throw new AppError(httpStatus.BAD_REQUEST,'No Application Found')
+    }
+    return result;
+    
+}
+
 export const applicationService={
-    applyJob
+    applyJob,
+    appliedJob
 }
