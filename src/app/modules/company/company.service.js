@@ -18,6 +18,18 @@ const registerCompany=async(req)=>{
     return result;   
 }
 
+const getCompany= async(req)=>{
+    const userId= req.user.userId;
+    const company= await Company.find({userId});
+    if(!company){
+        throw new AppError(httpStatus.NOT_FOUND,"Company not found");
+    }
+
+    return company;
+
+}
+
 export const companyService={
-    registerCompany
+    registerCompany,
+    getCompany
 }

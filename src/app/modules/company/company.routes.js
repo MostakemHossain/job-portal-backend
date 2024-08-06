@@ -12,5 +12,10 @@ router.post(
   validateRequest(companyValidation.companyRegistrationValidationSchema),
   companyController.companyRegistration
 );
+router.get(
+  "/get-my-company",
+  auth(),
+  companyController.getCompany
+);
 
 export const companyRoutes = router;
