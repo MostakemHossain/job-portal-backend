@@ -31,9 +31,19 @@ const getApplicants  = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const updateStatus  = catchAsync(async (req, res) => {
+    const result = await applicationService.updateStatus(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Application status updated  successfully",
+      data: result,
+    });
+  });
 
   export const applicationController={
     applyJob,
     appliedJob,
-    getApplicants
+    getApplicants,
+    updateStatus
   }

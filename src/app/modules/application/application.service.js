@@ -75,8 +75,16 @@ const getApplicants = async (req) => {
   return job;
 };
 
+export const updateStatus=async(req)=>{
+    const {status}=req.body;
+    const applicationId= req.params.id;
+    const result= await Application.findByIdAndUpdate(applicationId,{status},{new:true});
+    return result;
+}
+
 export const applicationService = {
   applyJob,
   appliedJob,
   getApplicants,
+  updateStatus
 };
