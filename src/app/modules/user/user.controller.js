@@ -13,8 +13,18 @@ const userRegistration = catchAsync(async (req, res) => {
     data: result
   });
 });
+const userUpdate = catchAsync(async (req, res) => {
+  const result = await userServices.updateProfile(req,res);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User Updated Successfully",
+    data: result
+  });
+});
 
 
 export const userController = {
-  userRegistration
+  userRegistration,
+  userUpdate,
 };
