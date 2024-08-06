@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError.js";
 import { Job } from "./job.model.js";
 
 const postJob= async(req)=>{
@@ -25,7 +27,18 @@ const getALLJob=async(req)=>{
     return job;
 }
 
+const getJobById= async(req)=>{
+    const jobId=req.params.jobId;
+    const result= await Job.findById(jobId).populate('company');
+    if(!result){
+        throw new AppError(httpStatus.NOT_FOUND,"Job not found");
+    }
+
+    return result;
+}
+
 export const jobService={
 postJob,
-getALLJob
+getALLJob,
+getJobById
 }

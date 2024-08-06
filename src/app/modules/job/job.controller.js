@@ -17,13 +17,23 @@ const getALLJob = catchAsync(async (req, res) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Post are retrieved Successfully",
+      message: "Job are retrieved Successfully",
+      data: result,
+    });
+  });
+const getJobById = catchAsync(async (req, res) => {
+    const result = await jobService.getJobById(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Job is retrieved Successfully",
       data: result,
     });
   });
 
 export const jobController={
     postJob,
-    getALLJob
+    getALLJob,
+    getJobById
 }
   

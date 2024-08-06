@@ -16,6 +16,10 @@ router.get(
   "/",
   jobController.getALLJob
 );
+router.get(
+  "/:jobId",
+  jobController.getJobById
+);
 
 
 export const jobRoutes = router;
