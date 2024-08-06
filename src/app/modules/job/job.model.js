@@ -27,7 +27,12 @@ const JobSchema = new Schema(
     },
     position: {
       type: Number,
+      required: [true, 'Experience level is Required'],
+    },
+    experienceLevel:{
+      type: Number,
       required: [true, 'Job Position is Required'],
+
     },
     company: {
       type: mongoose.Schema.Types.ObjectId,
