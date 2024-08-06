@@ -22,8 +22,18 @@ const getCompany = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const getCompanyById = catchAsync(async (req, res) => {
+    const result = await companyService.getCompanyById(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Company is retrieved Successfully",
+      data: result,
+    });
+  });
 
 export const companyController={
     companyRegistration,
-    getCompany
+    getCompany,
+    getCompanyById,
 }

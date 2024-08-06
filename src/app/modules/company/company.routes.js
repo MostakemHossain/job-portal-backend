@@ -17,5 +17,9 @@ router.get(
   auth(),
   companyController.getCompany
 );
+router.get(
+  "/:companyId",
+  companyController.getCompanyById
+);
 
 export const companyRoutes = router;

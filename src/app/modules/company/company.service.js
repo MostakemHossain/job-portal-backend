@@ -29,7 +29,17 @@ const getCompany= async(req)=>{
 
 }
 
+const getCompanyById=async(req)=>{
+    const companyId= req.params.companyId;
+    const company= await Company.findById(companyId);
+    if(!company){
+        throw new AppError(httpStatus.NOT_FOUND,"Company not found");
+    }
+    return company;
+}
+
 export const companyService={
     registerCompany,
-    getCompany
+    getCompany,
+    getCompanyById
 }
