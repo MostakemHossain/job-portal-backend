@@ -12,6 +12,10 @@ router.post(
   validateRequest(jobValidation.postJobValidationSchema),
   jobController.postJob
 );
+router.get(
+  "/",
+  jobController.getALLJob
+);
 
 
 export const jobRoutes = router;

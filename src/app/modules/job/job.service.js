@@ -12,6 +12,20 @@ const postJob= async(req)=>{
 
 }
 
+const getALLJob=async(req)=>{
+    const keywords= req.query.searchTerm || "";
+    const query={
+        $or:[
+            {title:{$regex:keywords,$options:"i"}},
+            {description:{$regex:keywords,$options:"i"}},
+        ]
+    }
+    const job= await Job.find(query).populate('company');
+
+    return job;
+}
+
 export const jobService={
-postJob
+postJob,
+getALLJob
 }
