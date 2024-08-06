@@ -1,7 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 const companySchema = new Schema({
   name: {
     type: String,
+    unique:true,
     required: [true, "Company Name is Required"],
   },
   description: {
