@@ -22,8 +22,18 @@ const appliedJob = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const getApplicants  = catchAsync(async (req, res) => {
+    const result = await applicationService.getApplicants(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All Applicants are retrieved successfully",
+      data: result,
+    });
+  });
 
   export const applicationController={
     applyJob,
-    appliedJob
+    appliedJob,
+    getApplicants
   }

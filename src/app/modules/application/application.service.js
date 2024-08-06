@@ -3,54 +3,80 @@ import AppError from "../../errors/AppError.js";
 import { Job } from "../job/job.model.js";
 import { Application } from "./application.model.js";
 
-const applyJob=async(req)=>{
-    const userId= req.user.userId;
-    const jobId= req.params.jobId;
-    // check if  the user already apply in this job;
-    const existingApplication= await Application.findOne({
-        job:jobId,
-        applicant:userId
+const applyJob = async (req) => {
+  const userId = req.user.userId;
+  const jobId = req.params.jobId;
+  // check if  the user already apply in this job;
+  const existingApplication = await Application.findOne({
+    job: jobId,
+    applicant: userId,
+  });
+  if (existingApplication) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "You have Already apply for this job"
+    );
+  }
+  // check the job is exists or not
+  const jobs = await Job.findById(jobId);
+  if (!jobs) {
+    throw new AppError(httpStatus.NOT_FOUND, "Job not found");
+  }
+  const result = await Application.create({
+    job: jobId,
+    applicant: userId,
+  });
+
+  jobs.applications.push(result._id);
+  await jobs.save();
+  return result;
+};
+
+const appliedJob = async (req) => {
+  const userId = req.user.userId;
+  const result = await Application.find({
+    applicant: userId,
+  })
+    .sort({
+      createdAt: -1,
     })
-    if(existingApplication){
-        throw new AppError(httpStatus.BAD_REQUEST,'You have Already apply for this job')
-    };
-    // check the job is exists or not
-    const jobs= await Job.findById(jobId);
-    if(!jobs){
-        throw new AppError(httpStatus.NOT_FOUND,'Job not found')
-    }
-    const result= await Application.create({
-        job:jobId,
-        applicant:userId
+    .populate({
+      path: "job",
+      populate: {
+        path: "company",
+      },
     });
 
-    jobs.applications.push(result._id);
-    await jobs.save();
-    return result;
-    
-}
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, "No Application Found");
+  }
+  return result;
+};
 
-const appliedJob= async(req)=>{
-    const userId= req.user.userId;
-    const result= await Application.find({
-        applicant:userId
-    }).sort({
-        createdAt:-1
-    }).populate({
-        path:"job",
-        populate:{
-            path:'company'
-        }
-    });
+// admin see how many users are applied
+const getApplicants = async (req) => {
+  const jobId = req.params.jobId;
+  console.log(jobId)
+  const job = await Job.findById(jobId).populate({
+    path: "applications",
+    options: {
+      sort: { createdAt: -1 },
+    },
+    populate: {
+      path: "applicant",
+      sort: { createdAt: -1 },
+    },
+  });
 
-    if(!result){ 
-            throw new AppError(httpStatus.BAD_REQUEST,'No Application Found')
-    }
-    return result;
-    
-}
+  if (!job) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Job not Found!!");
+  }
 
-export const applicationService={
-    applyJob,
-    appliedJob
-}
+  return job;
+};
+
+export const applicationService = {
+  applyJob,
+  appliedJob,
+  getApplicants,
+};
