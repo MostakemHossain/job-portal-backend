@@ -20,21 +20,23 @@ const userRegistration = async (payload) => {
 };
 
 const updateProfile= async(req,res)=>{
-  const { skills, fullName, email, bio, phoneNumber } = req.body;
-  const skillsArray = skills ? skills.split(",") : [];
+  const { fullName, email, phoneNumber, profile } = req.body;
   const userId = req.user.userId;
 
   const updateFields = {};
   if (fullName) updateFields.fullName = fullName;
   if (email) updateFields.email = email;
   if (phoneNumber) updateFields.phoneNumber = phoneNumber;
-  if (bio || skillsArray.length) {
-    updateFields.profile = {};
-    if (bio) updateFields.profile.bio = bio;
-    if (skillsArray.length) updateFields.profile.skills = skillsArray;
+  if (profile) {
+    if (profile.bio) updateFields["profile.bio"] = profile.bio;
+    if (profile.skills) updateFields["profile.skills"] = profile.skills;
   }
 
-  const userUpdate = await User.findByIdAndUpdate(userId, { $set: updateFields }, { new: true, runValidators: true });
+  const userUpdate = await User.findByIdAndUpdate(
+    userId,
+    { $set: updateFields },
+    { new: true, runValidators: true }
+  );
   return userUpdate;
 
 }
