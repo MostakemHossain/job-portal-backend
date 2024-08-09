@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const createUserValidationSchema = z.object({
-  body: z.object({
     fullName: z.string({
       required_error: "Full Name is Required"
     }),
@@ -17,7 +16,7 @@ const createUserValidationSchema = z.object({
     role: z.enum(["student", "recruiter"], {
       required_error: "Role is Required"
     }),
-  }),
+  
 });
 
 

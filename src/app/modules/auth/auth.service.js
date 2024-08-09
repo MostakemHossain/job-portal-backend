@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
+import httpStatus from "http-status";
 import config from "../../config/index.js";
+import AppError from "../../errors/AppError.js";
 import { jwtHelpers } from "../../helpers/jwtHelpers.js";
 import { User } from "../user/user.model.js";
-import httpStatus from "http-status";
-import AppError from "../../errors/AppError.js";
 
 const login = async (payload) => {
   const { email, password, role } = payload;
