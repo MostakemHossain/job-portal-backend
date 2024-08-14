@@ -37,24 +37,27 @@ const userRegistration = async (req) => {
   return result;
 };
 
-const updateProfile= async(req,res)=>{
-  const { fullName, email, phoneNumber, profile } = req.body;
-  const userId = req.user.userId;
+const updateProfile= async(req,res)=>{  
+  const { fullName, email, phoneNumber, skills,bio } = req.body;
 
+  const userId = req.user.userId;
   const updateFields = {};
+
+  if (req.file) {
+    const uploadToCloudinary = await fileUploader.uploadToCloudinary(req.file);
+    req.body.resume = uploadToCloudinary?.secure_url;
+  }
+
   if (fullName) updateFields.fullName = fullName;
   if (email) updateFields.email = email;
   if (phoneNumber) updateFields.phoneNumber = phoneNumber;
-  if (profile) {
-    if (profile.bio) updateFields["profile.bio"] = profile.bio;
-    if (profile.skills) updateFields["profile.skills"] = profile.skills;
-  }
 
   const userUpdate = await User.findByIdAndUpdate(
     userId,
-    { $set: updateFields },
+    { $set: req.body},
     { new: true, runValidators: true }
   );
+
   return userUpdate;
 
 }

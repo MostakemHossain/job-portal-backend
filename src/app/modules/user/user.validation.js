@@ -22,15 +22,15 @@ const createUserValidationSchema = z.object({
 
 
 const updateUserValidationSchema = z.object({
-  body: z.object({
+
     fullName: z.string().optional(),
     email: z.string().email("Invalid email format").optional(),
     phoneNumber: z.string().optional(),
-    profile: z.object({
+   
       bio: z.string().optional(),
-      skills: z.array(z.string()).optional(),
-    }).optional(),
-  }),
+      skills: z.string(z.string()).optional(),
+  
+
 });
 
 

@@ -6,12 +6,12 @@ import { jwtHelpers } from "../../helpers/jwtHelpers.js";
 import { User } from "../user/user.model.js";
 
 const login = async (payload) => {
-  const { email, password, role } = payload;
+  const { email, role } = payload;
   const isUserExist = await User.findOne({ email });
   if (!isUserExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Email and Password");
   }
-  const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
+  const isPasswordMatch = bcrypt.compare(payload.password, isUserExist.password);
   if (!isPasswordMatch) {
     throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Email and Password");
   }
@@ -37,9 +37,11 @@ const login = async (payload) => {
     String(config.jwt__refresh_secret),
     String(config.jwt__refresh_expire_in)
   );
+    
 
   return {
     accessToken,
+    user:isUserExist,
     refreshToken,
   };
 };
