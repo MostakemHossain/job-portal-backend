@@ -29,8 +29,6 @@ const updateUserValidationSchema = z.object({
    
       bio: z.string().optional(),
       skills: z.string(z.string()).optional(),
-  
-
 });
 
 

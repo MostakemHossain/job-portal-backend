@@ -21,7 +21,7 @@ router.put(
   "/update-user",
   auth(),
   fileUploader.upload.single("file"),
-  (req, res, next) => {   
+  (req, res, next) => { 
     req.body = userValidation.updateUserValidationSchema.parse(
       (req.body)
     );
