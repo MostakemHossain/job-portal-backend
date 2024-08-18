@@ -29,7 +29,7 @@ const getALLJob=async(req)=>{
 
 const getJobById= async(req)=>{
     const jobId=req.params.jobId;
-    const result= await Job.findById(jobId).populate('company');
+    const result= await Job.findById(jobId).populate('company applications');
     if(!result){
         throw new AppError(httpStatus.NOT_FOUND,"Job not found");
     }
