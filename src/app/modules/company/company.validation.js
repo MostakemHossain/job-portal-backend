@@ -7,7 +7,24 @@ const companyRegistrationValidationSchema= z.object({
         })
     })
 });
+const companyUpdateValidationSchema= z.object({
+        name:z.string({
+            required_error:"Company name is Required"
+           
+        }).optional(),
+        description:z.string({
+           
+        }).optional(),
+        website:z.string({
+            
+        }).optional(),
+        location:z.string({
+            
+        }).optional()
+        
+});
 
 export const companyValidation={
-    companyRegistrationValidationSchema
+    companyRegistrationValidationSchema,
+    companyUpdateValidationSchema
 }

@@ -1,6 +1,7 @@
 import express from "express";
 import auth from "../../middlewares/auth.js";
 import validateRequest from "../../middlewares/validateRequest.js";
+import { fileUploader } from "../../shared/fileUpload.js";
 import { companyController } from "./company.controller.js";
 import { companyValidation } from "./company.validation.js";
 
@@ -24,7 +25,11 @@ router.get(
 router.put(
   "/:companyId",
   auth(),
-  companyController.updateCompanyById
+  fileUploader.upload.single("file"),
+  (req, res, next) => { 
+    
+    return companyController.updateCompanyById(req, res, next);
+  }
 );
 
 export const companyRoutes = router;

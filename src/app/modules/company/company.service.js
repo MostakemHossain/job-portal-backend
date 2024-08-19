@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError.js";
+import { fileUploader } from "../../shared/fileUpload.js";
 import { Company } from "./company.model.js";
 
 const registerCompany=async(req)=>{
@@ -7,7 +8,7 @@ const registerCompany=async(req)=>{
 
     const company= await Company.findOne({name});
     if(company){
-        throw new AppError(httpStatus.BAD_REQUEST,'You can register same company')
+        throw new AppError(httpStatus.BAD_REQUEST,'You cannot register same company')
     }
 
     const result= await Company.create({
@@ -40,6 +41,10 @@ const getCompanyById=async(req)=>{
 
 export const updateCompany= async(req)=>{
     const file= req.file;
+    if (req.file) {
+        const uploadToCloudinary = await fileUploader.uploadToCloudinary(req.file);
+        req.body.logo = uploadToCloudinary?.secure_url;
+      }
 
     const result= await Company.findByIdAndUpdate(req.params.companyId,req.body,{new:true});
 
