@@ -32,7 +32,6 @@ const getCompanyById = catchAsync(async (req, res) => {
     });
   });
 const updateCompanyById = catchAsync(async (req, res) => {
-  console.log(req.body)
     const result = await companyService.updateCompany(req);
     sendResponse(res, {
       statusCode: httpStatus.OK,

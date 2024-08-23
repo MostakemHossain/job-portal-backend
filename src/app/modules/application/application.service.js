@@ -55,8 +55,7 @@ const appliedJob = async (req) => {
 
 // admin see how many users are applied
 const getApplicants = async (req) => {
-  const jobId = req.params.jobId;
-  console.log(jobId)
+  const jobId = req.params.jobId; 
   const job = await Job.findById(jobId).populate({
     path: "applications",
     options: {

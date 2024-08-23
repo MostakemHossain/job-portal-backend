@@ -27,7 +27,6 @@ router.put(
   auth(),
   fileUploader.upload.single("file"),
   (req, res, next) => { 
-    
     return companyController.updateCompanyById(req, res, next);
   }
 );

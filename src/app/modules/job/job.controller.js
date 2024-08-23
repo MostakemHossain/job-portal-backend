@@ -31,6 +31,7 @@ const getJobById = catchAsync(async (req, res) => {
     });
   });
 const getAdminsJob = catchAsync(async (req, res) => {
+ 
     const result = await jobService.getAdminsJob(req);
     sendResponse(res, {
       statusCode: httpStatus.OK,
